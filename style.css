@@ -45,6 +45,11 @@ nav ul li a:hover {
     background-color: rgba(255, 255, 255, 0.1);
 }
 
+/* Static links in header */
+nav .static-links {
+    margin-left: auto;
+}
+
 /* Main content styles */
 .container {
     display: flex;
@@ -67,6 +72,10 @@ nav ul li a:hover {
     margin-bottom: 1rem;
     padding-bottom: 0.5rem;
     border-bottom: 1px solid #e9ecef;
+}
+
+.sidebar h2:not(:first-child) {
+    margin-top: 2rem;
 }
 
 .sidebar ul {
@@ -93,6 +102,11 @@ nav ul li a:hover {
 .sidebar ul li a.active {
     background-color: #e9ecef;
     font-weight: bold;
+}
+
+/* Pages list styling */
+.pages-list {
+    margin-bottom: 1.5rem;
 }
 
 /* Content styles */
@@ -146,6 +160,26 @@ nav ul li a:hover {
     text-align: center;
     padding: 2rem;
     color: #6c757d;
+}
+
+.welcome-message ul {
+    text-align: left;
+    max-width: 500px;
+    margin: 1rem auto;
+}
+
+.welcome-message ul li {
+    margin-bottom: 0.5rem;
+}
+
+.welcome-message ul li a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.welcome-message ul li a:hover {
+    text-decoration: underline;
 }
 
 /* Footer styles */
