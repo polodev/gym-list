@@ -74,6 +74,11 @@ This exercise targets your lats, rhomboids, and biceps. Support yourself on a be
 
 ### Dumbbell / Barbell Dead Lift (ডাম্বেল / বারবেল ডেড লিফট) (10 rep x 4)
 
+<img src="images/dead-lift-1.webp" alt="Dumbbell Deadlift" class="exercise-image">    
+<img src="images/dead-lift-2.jpg" alt="Dumbbell Deadlift" class="exercise-image">    
+<img src="images/dead-lift-3.jpg" alt="Barbell Deadlift" class="exercise-image">    
+<img src="images/dead-lift-4.jpg" alt="Barbell Deadlift" class="exercise-image">    
+
 [Barbell Deadlift Tutorial](https://www.youtube.com/watch?v=1ZXobu7JvvE) | [Dumbbell Deadlift Tutorial](https://www.youtube.com/watch?v=hCDzSR6bW10)
 
 The deadlift is a fundamental compound movement that works your entire posterior chain. Maintain a neutral spine, engage your core, and drive through your heels. Keep the weight close to your body throughout the movement. The dumbbell variation is excellent for beginners or when focusing on unilateral strength.
