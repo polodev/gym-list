@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const markdownsFolder = 'markdowns';
     
     // DOM elements
-    const mainNav = document.getElementById('main-nav');
     const markdownContent = document.getElementById('markdown-content');
     
     // Initialize marked.js with options
@@ -68,18 +67,6 @@ document.addEventListener('DOMContentLoaded', function() {
             // Initialize Magnific Popup for images after content is loaded
             initializeMagnificPopup();
             
-            // Update active class in navigation
-            const navLinks = document.querySelectorAll('#main-nav a');
-            navLinks.forEach(link => {
-                if (link.getAttribute('href') === `#${fileName}`) {
-                    link.classList.add('active');
-                } else {
-                    link.classList.remove('active');
-                }
-            });
-            
-            // Update URL hash for bookmarking
-            window.location.hash = fileName;
         } catch (error) {
             console.error('Error loading markdown:', error);
             markdownContent.innerHTML = `<div class="error-message">
@@ -130,23 +117,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Set up event listener for navigation
-    mainNav.addEventListener('click', function(e) {
-        if (e.target.tagName === 'A') {
-            e.preventDefault();
-            const fileName = e.target.getAttribute('href').substring(1); // Remove the # from href
-            loadMarkdownContent(fileName);
-        }
-    });
-    
-    // Handle hash changes for browser navigation
-    window.addEventListener('hashchange', function() {
-        if (window.location.hash) {
-            const fileName = window.location.hash.substring(1);
-            loadMarkdownContent(fileName);
-        }
-    });
-    
-    // Load default content (exercise-list.md)
+    // Load default content (exercise-list.md) automatically
     loadMarkdownContent('exercise-list.md');
 });
