@@ -27,53 +27,85 @@ document.addEventListener('DOMContentLoaded', function() {
     // Function to fetch and display markdown content
     async function loadMarkdownContent(fileName) {
         try {
-            const response = await fetch(`${markdownsFolder}/${fileName}`);
+            // Show loading message
+            markdownContent.innerHTML = `<div class="loading-message">
+                <h2>Loading workout content...</h2>
+            </div>`;
+            
+            // Get the base URL for GitHub Pages compatibility
+            const baseUrl = window.location.pathname.includes('gym-list') ? 
+                            '/gym-list/' : '/';
+            
+            // Use the full path for GitHub Pages compatibility
+            const filePath = `${baseUrl}${markdownsFolder}/${fileName}`;
+            console.log('Attempting to load from:', filePath);
+            
+            const response = await fetch(filePath);
             if (!response.ok) {
-                throw new Error(`Failed to load ${fileName}`);
+                // Try alternative path if the first one fails
+                console.log('First attempt failed, trying alternative path');
+                const altPath = `${markdownsFolder}/${fileName}`;
+                const altResponse = await fetch(altPath);
+                
+                if (!altResponse.ok) {
+                    throw new Error(`Failed to load ${fileName}. Status: ${response.status}`);
+                }
+                
+                return processMarkdown(await altResponse.text());
             }
             
-            const markdownText = await response.text();
-            // Use marked with default renderer
-            const htmlContent = marked.parse(markdownText);
-            markdownContent.innerHTML = htmlContent;
-            
-            // Process YouTube links
-            const links = markdownContent.querySelectorAll('a');
-            links.forEach(link => {
-                const href = link.getAttribute('href');
-                if (href && (href.includes('youtube.com') || href.includes('youtu.be'))) {
-                    link.classList.add('video-popup');
-                    link.innerHTML = `<span class="video-link">${link.textContent} <i class="video-icon">▶</i></span>`;
-                }
-            });
-            
-            // Add Magnific Popup class to all img tags
-            const images = markdownContent.querySelectorAll('img.exercise-image');
-            images.forEach(img => {
-                // Wrap the image in an anchor tag for Magnific Popup
-                if (!img.parentElement.classList.contains('image-popup')) {
-                    const parent = img.parentElement;
-                    const wrapper = document.createElement('a');
-                    wrapper.href = img.src;
-                    wrapper.className = 'image-popup';
-                    wrapper.title = img.alt || '';
-                    
-                    // Replace the image with the wrapped version
-                    parent.insertBefore(wrapper, img);
-                    wrapper.appendChild(img);
-                }
-            });
-            
-            // Initialize Magnific Popup for images after content is loaded
-            initializeMagnificPopup();
+            return processMarkdown(await response.text());
             
         } catch (error) {
             console.error('Error loading markdown:', error);
             markdownContent.innerHTML = `<div class="error-message">
                 <h2>Error Loading Content</h2>
                 <p>${error.message}</p>
+                <p>Please try refreshing the page or check console for details.</p>
             </div>`;
         }
+    }
+    
+    // Process the markdown content
+    function processMarkdown(markdownText) {
+        // Use marked with default renderer
+        const htmlContent = marked.parse(markdownText);
+        markdownContent.innerHTML = htmlContent;
+        
+        // Process YouTube links
+        const links = markdownContent.querySelectorAll('a');
+        links.forEach(link => {
+            const href = link.getAttribute('href');
+            if (href && (href.includes('youtube.com') || href.includes('youtu.be'))) {
+                link.classList.add('video-popup');
+                link.innerHTML = `<span class="video-link">${link.textContent} <i class="video-icon">▶</i></span>`;
+            }
+        });
+        
+        // Add Magnific Popup class to all img tags
+        const images = markdownContent.querySelectorAll('img.exercise-image');
+        images.forEach(img => {
+            // Fix image paths if needed for GitHub Pages
+            if (window.location.pathname.includes('gym-list') && !img.src.includes('gym-list') && img.src.includes('/images/')) {
+                img.src = img.src.replace('/images/', '/gym-list/images/');
+            }
+            
+            // Wrap the image in an anchor tag for Magnific Popup
+            if (!img.parentElement.classList.contains('image-popup')) {
+                const parent = img.parentElement;
+                const wrapper = document.createElement('a');
+                wrapper.href = img.src;
+                wrapper.className = 'image-popup';
+                wrapper.title = img.alt || '';
+                
+                // Replace the image with the wrapped version
+                parent.insertBefore(wrapper, img);
+                wrapper.appendChild(img);
+            }
+        });
+        
+        // Initialize Magnific Popup for images after content is loaded
+        initializeMagnificPopup();
     }
     
     // Function to initialize Magnific Popup
