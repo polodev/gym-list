@@ -1,5 +1,3 @@
-# Exercise List
-
 ## Warm-up
 Start with these warm-up exercises to prepare your muscles and joints for the workout. Proper warm-up reduces injury risk and improves performance.
 
