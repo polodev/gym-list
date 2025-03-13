@@ -4,7 +4,8 @@
 Start with these warm-up exercises to prepare your muscles and joints for the workout. Proper warm-up reduces injury risk and improves performance.
 
 ### Push-ups (10 reps X 2)
-<img src="/images/push-ups.jpg" alt="Push-ups" class="exercise-image">
+<img src="/images/push-up-1.jpg" alt="Push-ups" class="exercise-image">
+<img src="/images/push-up-2.webp" alt="Push-ups" class="exercise-image">
 
 [Video Tutorial](https://www.youtube.com/watch?v=IODxDxX7oi4)
 
@@ -72,6 +73,16 @@ The goblet squat is excellent for developing lower body strength and mobility. H
 This exercise targets your lats, rhomboids, and biceps. Support yourself on a bench with one arm and leg, keep your back flat, and pull the weight up to your ribcage. Focus on squeezing your shoulder blade at the top.
 
 ### Dumbbell / Barbell Dead Lift (10 rep x 4)
-[Video Tutorial](https://www.youtube.com/watch?v=1ZXobu7JvvE)
 
-The deadlift is a fundamental compound movement that works your entire posterior chain. Maintain a neutral spine, engage your core, and drive through your heels. Keep the weight close to your body throughout the movement.
+[Barbell Deadlift Tutorial](https://www.youtube.com/watch?v=1ZXobu7JvvE) | [Dumbbell Deadlift Tutorial](https://www.youtube.com/watch?v=hCDzSR6bW10)
+
+The deadlift is a fundamental compound movement that works your entire posterior chain. Maintain a neutral spine, engage your core, and drive through your heels. Keep the weight close to your body throughout the movement. The dumbbell variation is excellent for beginners or when focusing on unilateral strength.
+
+### Planks
+<img src="/images/planks-1.jpeg" alt="Planks Exercise" class="exercise-image">
+<img src="/images/planks-2.jpeg" alt="Planks Exercise" class="exercise-image">
+<img src="/images/planks-3.jpg" alt="Planks Exercise" class="exercise-image">
+
+[Video Tutorial](https://www.youtube.com/watch?v=ASdvN_XEl_c)
+
+Planks are an excellent core-strengthening exercise that also engage your shoulders, arms, and glutes. Keep your body in a straight line from head to heels, engage your core, and breathe normally. Start with 30-second holds and gradually increase duration as you build strength.
