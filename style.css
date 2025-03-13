@@ -16,17 +16,24 @@ body {
 header {
     background-color: #343a40;
     color: white;
-    padding: 1rem 2rem;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 header h1 {
-    margin-bottom: 0.5rem;
+    margin: 0;
+    font-size: 1.8rem;
+}
+
+nav {
+    margin-top: 0.5rem;
 }
 
 nav ul {
-    display: flex;
     list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
 }
 
 nav ul li {
@@ -34,92 +41,34 @@ nav ul li {
 }
 
 nav ul li a {
-    color: #f8f9fa;
+    color: white;
     text-decoration: none;
     padding: 0.5rem;
     border-radius: 4px;
     transition: background-color 0.3s;
 }
 
-nav ul li a:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-}
-
-/* Static links in header */
-nav .static-links {
-    margin-left: auto;
+nav ul li a:hover, nav ul li a.active {
+    background-color: #495057;
 }
 
 /* Main content styles */
+main {
+    padding: 1rem;
+}
+
 .container {
-    display: flex;
     max-width: 1200px;
-    margin: 2rem auto;
-    min-height: calc(100vh - 180px);
-}
-
-/* Sidebar styles */
-.sidebar {
-    width: 250px;
-    background-color: white;
-    padding: 1.5rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    margin-right: 2rem;
-}
-
-.sidebar h2 {
-    margin-bottom: 1rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid #e9ecef;
-}
-
-.sidebar h2:not(:first-child) {
-    margin-top: 2rem;
-}
-
-.sidebar ul {
-    list-style: none;
-}
-
-.sidebar ul li {
-    margin-bottom: 0.5rem;
-}
-
-.sidebar ul li a {
-    display: block;
-    color: #495057;
-    text-decoration: none;
-    padding: 0.5rem;
-    border-radius: 4px;
-    transition: background-color 0.3s;
-}
-
-.sidebar ul li a:hover {
-    background-color: #f1f3f5;
-}
-
-.sidebar ul li a.active {
-    background-color: #e9ecef;
-    font-weight: bold;
-}
-
-/* Pages list styling */
-.pages-list {
-    margin-bottom: 1.5rem;
+    margin: 0 auto;
 }
 
 /* Content styles */
 .content {
-    flex: 1;
     background-color: white;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-#markdown-content {
-    max-width: 800px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    width: 100%;
 }
 
 /* Markdown content styling */
@@ -156,30 +105,64 @@ nav .static-links {
     color: #6c757d;
 }
 
-.welcome-message {
-    text-align: center;
-    padding: 2rem;
-    color: #6c757d;
+/* Exercise images styling */
+.exercise-image {
+    max-width: 150px;
+    max-height: 150px;
+    margin: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    display: inline-block;
+    vertical-align: middle;
 }
 
-.welcome-message ul {
-    text-align: left;
-    max-width: 500px;
-    margin: 1rem auto;
+.exercise-image:hover {
+    transform: scale(1.05);
 }
 
-.welcome-message ul li {
-    margin-bottom: 0.5rem;
-}
-
-.welcome-message ul li a {
-    color: #007bff;
-    text-decoration: none;
+/* Video link styling */
+.video-link {
+    display: inline-flex;
+    align-items: center;
+    background-color: #f8f9fa;
+    padding: 5px 10px;
+    border-radius: 4px;
+    color: #dc3545;
     font-weight: 500;
+    text-decoration: none;
+    margin: 5px 0;
+    transition: background-color 0.3s;
 }
 
-.welcome-message ul li a:hover {
-    text-decoration: underline;
+.video-link:hover {
+    background-color: #e9ecef;
+}
+
+.video-icon {
+    margin-left: 5px;
+    font-style: normal;
+}
+
+/* Magnific Popup customization */
+.mfp-bg {
+    opacity: 0.9;
+}
+
+.mfp-figure:after {
+    box-shadow: none;
+    background: transparent;
+}
+
+.mfp-title {
+    color: #f8f9fa;
+    font-size: 14px;
+    padding: 10px 0;
+}
+
+/* Welcome message */
+.welcome-message {
+    display: none;
 }
 
 /* Footer styles */
@@ -193,13 +176,19 @@ footer {
 
 /* Responsive styles */
 @media (max-width: 768px) {
-    .container {
-        flex-direction: column;
+    header {
+        padding: 0.8rem;
     }
     
-    .sidebar {
-        width: 100%;
-        margin-right: 0;
-        margin-bottom: 1.5rem;
+    header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .container {
+        padding: 0;
+    }
+    
+    .content {
+        padding: 1rem;
     }
 }

@@ -3,8 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const markdownsFolder = 'markdowns';
     
     // DOM elements
-    const workoutList = document.getElementById('workout-list');
-    const sidebarList = document.getElementById('sidebar-list');
+    const mainNav = document.getElementById('main-nav');
     const markdownContent = document.getElementById('markdown-content');
     
     // Initialize marked.js with options
@@ -12,6 +11,8 @@ document.addEventListener('DOMContentLoaded', function() {
         breaks: true,
         gfm: true,
         headerIds: true,
+        // Allow HTML in the markdown
+        html: true,
         highlight: function(code, lang) {
             if (hljs && lang && hljs.getLanguage(lang)) {
                 try {
@@ -33,13 +34,44 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
             const markdownText = await response.text();
+            // Use marked with default renderer
             const htmlContent = marked.parse(markdownText);
             markdownContent.innerHTML = htmlContent;
             
-            // Update active class in sidebar
-            const sidebarLinks = document.querySelectorAll('#sidebar-list a');
-            sidebarLinks.forEach(link => {
-                if (link.getAttribute('data-file') === fileName) {
+            // Process YouTube links
+            const links = markdownContent.querySelectorAll('a');
+            links.forEach(link => {
+                const href = link.getAttribute('href');
+                if (href && (href.includes('youtube.com') || href.includes('youtu.be'))) {
+                    link.classList.add('video-popup');
+                    link.innerHTML = `<span class="video-link">${link.textContent} <i class="video-icon">▶</i></span>`;
+                }
+            });
+            
+            // Add Magnific Popup class to all img tags
+            const images = markdownContent.querySelectorAll('img.exercise-image');
+            images.forEach(img => {
+                // Wrap the image in an anchor tag for Magnific Popup
+                if (!img.parentElement.classList.contains('image-popup')) {
+                    const parent = img.parentElement;
+                    const wrapper = document.createElement('a');
+                    wrapper.href = img.src;
+                    wrapper.className = 'image-popup';
+                    wrapper.title = img.alt || '';
+                    
+                    // Replace the image with the wrapped version
+                    parent.insertBefore(wrapper, img);
+                    wrapper.appendChild(img);
+                }
+            });
+            
+            // Initialize Magnific Popup for images after content is loaded
+            initializeMagnificPopup();
+            
+            // Update active class in navigation
+            const navLinks = document.querySelectorAll('#main-nav a');
+            navLinks.forEach(link => {
+                if (link.getAttribute('href') === `#${fileName}`) {
                     link.classList.add('active');
                 } else {
                     link.classList.remove('active');
@@ -57,56 +89,55 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Function to fetch and populate workout list
-    async function loadWorkoutList() {
-        try {
-            // In a real application, you would fetch this list from a server
-            // For this example, we'll use a hardcoded list of markdown files
-            const workoutFiles = [
-                { name: 'Chest Workout', file: 'chest-workout.md' },
-                { name: 'Leg Workout', file: 'leg-workout.md' }
-                // Add more workouts as needed
-            ];
-            
-            // Populate sidebar list
-            workoutFiles.forEach(workout => {
-                const li = document.createElement('li');
-                const a = document.createElement('a');
-                a.textContent = workout.name;
-                a.href = `#${workout.file}`;
-                a.setAttribute('data-file', workout.file);
-                a.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    loadMarkdownContent(workout.file);
-                });
-                li.appendChild(a);
-                sidebarList.appendChild(li);
-                
-                // Also add to header navigation
-                const navLi = document.createElement('li');
-                const navA = document.createElement('a');
-                navA.textContent = workout.name;
-                navA.href = `#${workout.file}`;
-                navA.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    loadMarkdownContent(workout.file);
-                });
-                navLi.appendChild(navA);
-                workoutList.appendChild(navLi);
-            });
-            
-            // Check if URL has a hash and load that content
-            if (window.location.hash) {
-                const fileName = window.location.hash.substring(1);
-                loadMarkdownContent(fileName);
+    // Function to initialize Magnific Popup
+    function initializeMagnificPopup() {
+        // For images
+        $('.image-popup').magnificPopup({
+            type: 'image',
+            gallery: {
+                enabled: true,
+                navigateByImgClick: true,
+                preload: [0, 1]
+            },
+            image: {
+                titleSrc: function(item) {
+                    return item.el.attr('title');
+                }
+            },
+            zoom: {
+                enabled: true,
+                duration: 300
             }
-        } catch (error) {
-            console.error('Error loading workout list:', error);
-        }
+        });
+        
+        // For YouTube videos
+        $('.video-popup').magnificPopup({
+            type: 'iframe',
+            iframe: {
+                patterns: {
+                    youtube: {
+                        index: 'youtube.com/',
+                        id: 'v=',
+                        src: 'https://www.youtube.com/embed/%id%?autoplay=1'
+                    },
+                    youtu: {
+                        index: 'youtu.be/',
+                        id: '/',
+                        src: 'https://www.youtube.com/embed/%id%?autoplay=1'
+                    }
+                }
+            }
+        });
     }
     
-    // Initialize the application
-    loadWorkoutList();
+    // Set up event listener for navigation
+    mainNav.addEventListener('click', function(e) {
+        if (e.target.tagName === 'A') {
+            e.preventDefault();
+            const fileName = e.target.getAttribute('href').substring(1); // Remove the # from href
+            loadMarkdownContent(fileName);
+        }
+    });
     
     // Handle hash changes for browser navigation
     window.addEventListener('hashchange', function() {
@@ -115,4 +146,7 @@ document.addEventListener('DOMContentLoaded', function() {
             loadMarkdownContent(fileName);
         }
     });
+    
+    // Load default content (exercise-list.md)
+    loadMarkdownContent('exercise-list.md');
 });
